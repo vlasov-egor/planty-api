@@ -1,23 +1,30 @@
+import uvicorn
+from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from fastapi import FastAPI
 
 from . import config
-
-from .database.dbSession import DBSession
+from .database.dbSession import DbSession
 from .database.models.base import Base
-from .routers import plants
+from .routers.plants_router import PlantRouter
 
+# Db init
 engine = create_engine(
     f"postgresql://{config.DATABASE_USER}:{config.DATABASE_PASSWORD}@{config.DATABASE_HOST}:{config.DATABASE_PORT}/{config.DATABASE_NAME}",
     echo=True,
     pool_pre_ping=True,
 )
 session_factory = sessionmaker(bind=engine)
-db_session = DBSession(session_factory())
+db_session = DbSession(session_factory())
 
 Base.metadata.create_all(engine)
 
+# app init
 app = FastAPI()
 
-app.include_router(plants.router)
+plant_router = PlantRouter(db_session)
+
+app.include_router(plant_router.router)
+
+if __name__ == "__main__":
+    uvicorn.run(app)

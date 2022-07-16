@@ -8,7 +8,7 @@ from .models.base import BaseModel
 log = getLogger()
 
 
-class DBSession(object):
+class DbSession():
     _session: Session
 
     def __init__(self, session: Session, *args, **kwargs):
