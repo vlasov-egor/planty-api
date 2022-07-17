@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from . import config
 from .database.dbSession import DbSession
 from .database.models.base import Base
-from .routers.plants_router import PlantRouter
+from .routers.plants_router import plants_router
 
 # Db init
 engine = create_engine(
@@ -22,9 +22,7 @@ Base.metadata.create_all(engine)
 # app init
 app = FastAPI()
 
-plant_router = PlantRouter(db_session)
-
-app.include_router(plant_router.router)
+app.include_router(plants_router)
 
 if __name__ == "__main__":
     uvicorn.run(app)
