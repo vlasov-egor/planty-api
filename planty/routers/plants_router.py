@@ -7,8 +7,13 @@ router = APIRouter(prefix="/plants")
 
 
 @router.get("/")
-async def root():
-    return {"message": "Hello World"}
+async def get_all(_db_context: get_db_session = Depends()):
+    return PlantsService(_db_context).get_all()
+
+
+@router.get("/{plant_id}")
+async def get(plant_id: int, _db_context: get_db_session = Depends()):
+    return PlantsService(_db_context).get(plant_id)
 
 
 @router.post("/import")

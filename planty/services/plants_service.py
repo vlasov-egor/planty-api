@@ -10,6 +10,15 @@ class PlantsService:
     def __init__(self, db_session: DbSession):
         self._db_session = db_session
 
+    def get_all(self) -> list[Plant]:
+        return self._db_session.query(Plant).all()
+
+    def get(self, plant_id: int) -> Plant:
+        return self._db_session \
+            .query(Plant) \
+            .filter(Plant.id == plant_id) \
+            .one()
+
     def import_plants(self, path_to_json: str):
         with open(path_to_json) as json_file:
             plants = json.load(json_file)
