@@ -19,3 +19,8 @@ Accept: application/json
 
 POST http://127.0.0.1:8000/plants/import
 Accept: application/json
+
+###
+
+POST http://0.0.0.0:8008/plants
+Accept: application/json
