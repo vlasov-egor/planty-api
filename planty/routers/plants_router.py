@@ -1,16 +1,18 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-from ..database.dbSession import DbSession
 from ..services.plants_service import PlantsService
+from ..dependencies import get_db_session
 
-plants_router = APIRouter()
+router = APIRouter(prefix="/plants")
 
 
-@plants_router.get("/")
+@router.get("/")
 async def root():
     return {"message": "Hello World"}
 
 
-@plants_router.post("/plants/import")
-async def import_plants():
-    self._plants_service.import_plants("/Users/egor-vlasov/src/planty-parser/res.json")
+@router.post("/import")
+async def import_plants(_db_context: get_db_session = Depends()):
+    PlantsService(_db_context).import_plants(
+        "/Users/egor-vlasov/src/planty/planty-parser/res.json"
+    )
