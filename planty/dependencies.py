@@ -12,7 +12,7 @@ class DbContext:
 
     def __init__(self):
         self.engine = create_engine(
-            f"postgresql://{config.DATABASE_USER}:{config.DATABASE_PASSWORD}@{config.DATABASE_HOST}:{config.DATABASE_PORT}/{config.DATABASE_NAME}",
+            config.DATABASE_CONNECTION_STRING,
             echo=True,
             pool_pre_ping=True,
         )

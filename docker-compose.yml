@@ -1,7 +1,35 @@
 services:
-  web:
+  planty:
+    environment:
+      - Database_Connection_String=${DATABASE_CONNECTION_STRING:-postgresql://postgres:postgres@planty-api-postgres-1:5432/planty}
+
     build: ./
     image: planty
     command: uvicorn planty.app:app --reload --host 0.0.0.0 --port 8000
     ports:
-      - 8000:8000
+      - "8000:80"
+    networks:
+      - default
+
+  postgres:
+    image: evgorelov/pg_ru_locale
+    deploy:
+      resources:
+        limits:
+          cpus: '0.75'
+          memory: 512M
+    restart: always
+    environment:
+      POSTGRES_DB: "planty"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - "6432:5432"
+    networks:
+      - default
+
+networks:
+  default:
+    name: planty_network

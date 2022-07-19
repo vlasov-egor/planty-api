@@ -1,5 +1,4 @@
-DATABASE_USER = "postgres"
-DATABASE_PASSWORD = "postgres"
-DATABASE_HOST = "localhost"
-DATABASE_PORT = 5432
-DATABASE_NAME = "Planty"
+import json
+import os
+
+DATABASE_CONNECTION_STRING = os.environ.get("Database_Connection_String")

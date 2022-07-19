@@ -12,5 +12,11 @@ app = FastAPI(dependencies=[Depends(get_db_session)])
 
 app.include_router(plants_router.router)
 
+
+@app.get("/")
+async def hello_world():
+    return {"message": "Hello World"}
+
+
 if __name__ == "__main__":
     uvicorn.run(app)
