@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, UploadFile
 
 from ..services.plants_service import PlantsService
 from ..dependencies import get_db_session
@@ -17,7 +17,6 @@ async def get(plant_id: int, _db_context: get_db_session = Depends()):
 
 
 @router.post("/import")
-async def import_plants(_db_context: get_db_session = Depends()):
-    PlantsService(_db_context).import_plants(
-        "/Users/egor-vlasov/src/planty/planty-parser/res.json"
-    )
+async def import_plants(file: UploadFile, _db_context: get_db_session = Depends()):
+    PlantsService(_db_context).import_plants(await file.read())
+    return {"result": "success"}
