@@ -22,5 +22,5 @@ Accept: application/json
 
 ###
 
-POST http://0.0.0.0:8008/plants
+GET http://localhost:80/
 Accept: application/json
