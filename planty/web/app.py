@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Depends
 
-from .dependencies import get_db_session, db_context
+from ..dependencies import get_db_session, db_context
 from .routers import plants_router
 
 # Db init

@@ -24,3 +24,8 @@ Accept: application/json
 
 GET http://localhost:80/
 Accept: application/json
+
+###
+
+GET http://localhost:80/plants/1
+Accept: application/json
