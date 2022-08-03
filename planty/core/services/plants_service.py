@@ -1,28 +1,25 @@
 import json
-
-from ...database.dbSession import DbSession
+from fastapi import Depends
+from ...database.dbSession import DbSession, get_session
 from ...database.models.plants import Plant
-from ...core.models.plant import PlantResponse
+from ...core.services.photo_merger_service import PhotoMerger
 
 
 class PlantsService:
     _db_session: DbSession
+    _photo_merger: PhotoMerger
 
-    def __init__(self, db_session: DbSession):
+    def __init__(self, db_session: DbSession = Depends(get_session)):
         self._db_session = db_session
 
     def get_all(self) -> list[Plant]:
         return self._db_session.query(Plant).all()
 
-    def get(self, plant_id: int) -> PlantResponse:
-        plant = self._db_session \
+    def get(self, plant_id: int) -> Plant:
+        return self._db_session \
             .query(Plant) \
             .filter(Plant.id == plant_id) \
             .one()
-
-        response = PlantResponse(**plant)
-        print(response.quick_facts)
-        return response
 
     def import_plants(self, json_file: bytes):
         plants = json.loads(json_file)
@@ -39,13 +36,3 @@ class PlantsService:
             )
             self._db_session.add_model(plant_entity)
             self._db_session.commit_session()
-
-    def get_plant_photo(self, plant_id: int):
-        plant_entity = \
-            self._db_session.query(Plant) \
-                .filter(Plant.id == plant_id) \
-                .one()
-
-        photo = open(f"/Users/egor-vlasov/src/planty/planty-parser/parsed_images/{plant_entity.name}", "r")
-
-        return photo

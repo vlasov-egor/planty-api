@@ -1,14 +1,13 @@
 import uvicorn
 from fastapi import FastAPI, Depends
 
-from ..dependencies import get_db_session, db_context
 from .routers import plants_router
+from ..database import dbSession
 
-# Db init
-db_context.create_tables()
+db_session = dbSession.get_session()
 
 # app init
-app = FastAPI(dependencies=[Depends(get_db_session)])
+app = FastAPI()
 
 app.include_router(plants_router.router)
 

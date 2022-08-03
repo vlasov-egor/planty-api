@@ -19,7 +19,7 @@ class Plant(BaseModel):
             f"id: {self.id}"
             f"name: {self.name}"
             f"short_name: {self.short_name}"
-            f"full_name: {self.full_name}"
+            f"full_name: {self.full_names}"
             f"highlights: {self.highlights}"
             f"favourite_activities: {self.favourite_activities}"
             f"quick_facts: {self.quick_facts}"
