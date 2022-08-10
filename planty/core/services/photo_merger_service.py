@@ -1,4 +1,3 @@
-from PIL import Image
 # import math
 #
 # # pot = Image.open("images/pot.webp")
@@ -16,6 +15,8 @@ from PIL import Image
 # merged.paste(plant, (100, 100), plant)
 # merged.show()
 from typing import Any
+
+from PIL import Image
 
 
 class PhotoMerger:

@@ -5,9 +5,9 @@ from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
+from .models.base import Base
 from .models.base import BaseModel
 from .. import config
-from .models.base import Base
 
 log = getLogger()
 

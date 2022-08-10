@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, UploadFile
-from ...core.services.plants_service import PlantsService
 from fastapi.responses import FileResponse
+
+from ...core.services.plants_service import PlantsService
 
 router = APIRouter(prefix="/plants")
 

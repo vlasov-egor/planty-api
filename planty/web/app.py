@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 
 from .routers import plants_router
 from ..database import dbSession
