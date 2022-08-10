@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.orm import sessionmaker
 
 from .models.base import BaseModel
-from ..web import config
+from .. import config
 from .models.base import Base
 
 log = getLogger()
