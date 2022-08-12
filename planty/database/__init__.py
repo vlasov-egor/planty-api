@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from .dbSession import DbSession
 from .models.base import Base
 from .. import config
-from sqlalchemy.orm import sessionmaker
-from .dbSession import DbSession
 
 engine = create_engine(config.DATABASE_CONNECTION_STRING, echo=True)
 Base.metadata.create_all(engine)

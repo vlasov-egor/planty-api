@@ -1,6 +1,7 @@
 import datetime
 
 from sqlalchemy import Column, Integer, TIMESTAMP
+
 from . import Base
 
 
