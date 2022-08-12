@@ -2,9 +2,9 @@ import uvicorn
 from fastapi import FastAPI
 
 from .routers import plants_router
-from ..database import dbSession
+from ..database import get_session
 
-db_session = dbSession.get_session()
+db_session = get_session()
 
 # app init
 app = FastAPI()

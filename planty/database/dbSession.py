@@ -1,18 +1,11 @@
 from logging import getLogger
 
-from sqlalchemy import create_engine
 from sqlalchemy.exc import IntegrityError, DataError
 from sqlalchemy.orm import Session
-from sqlalchemy.orm import sessionmaker
 
-from .models.base import Base
 from .models.base import BaseModel
-from .. import config
 
 log = getLogger()
-
-engine = create_engine(config.DATABASE_CONNECTION_STRING, echo=True)
-Base.metadata.create_all(engine)
 
 
 class DbSession:
@@ -63,14 +56,3 @@ class DbSession:
         except DataError as e:
             log.error(f"`{__name__}` {e}")
             raise
-
-
-session_factory = sessionmaker(bind=engine, autocommit=False, autoflush=False)
-
-
-def get_session() -> DbSession:
-    session = DbSession(session_factory())
-    try:
-        yield session
-    finally:
-        session.close_session()
