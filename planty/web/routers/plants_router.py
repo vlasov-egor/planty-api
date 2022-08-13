@@ -1,17 +1,17 @@
 from fastapi import APIRouter, Depends, UploadFile
 from fastapi.responses import FileResponse
-
+from ...core.models.plants import PlantResponse
 from ...core.services.plants_service import PlantsService
 
 router = APIRouter(prefix="/plants")
 
 
-@router.get("/")
+@router.get("/", response_model=list[PlantResponse])
 async def get_all(_plants_service: PlantsService = Depends()):
     return _plants_service.get_all()
 
 
-@router.get("/{plant_id}")
+@router.get("/{plant_id}", response_model=PlantResponse)
 async def get(plant_id: int, _plants_service: PlantsService = Depends()):
     return _plants_service.get(plant_id)
 
