@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Json
+from pydantic import BaseModel
 
 
 class PlantResponse(BaseModel):
@@ -6,7 +6,7 @@ class PlantResponse(BaseModel):
     short_name: str
     full_names: list
     highlights: list
-    favourite_activities: Json
-    quick_facts: Json
+    favourite_activities: dict
+    quick_facts: dict
     about_text: str
     photo: str

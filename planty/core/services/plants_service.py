@@ -1,6 +1,6 @@
 import json
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 
 from .photo_merger_service import PhotoMerger
 from ..mappers.plants_mapper import PlantsMapper
@@ -28,7 +28,10 @@ class PlantsService:
         return [self._mapper.to_plant_response(plant) for plant in plants]
 
     def get(self, plant_id: int) -> PlantResponse:
-        plant = self._db_session.query(Plant).filter(Plant.id == plant_id).one()
+        plant = self._db_session.query(Plant).filter(Plant.id == plant_id).first()
+
+        if plant is None:
+            raise HTTPException(status_code=404, detail="Item not found")
 
         return self._mapper.to_plant_response(plant)
 
