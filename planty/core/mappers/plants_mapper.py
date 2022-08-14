@@ -13,6 +13,5 @@ class PlantsMapper:
             highlights=entity.highlights,
             favourite_activities=entity.favourite_activities,
             quick_facts=entity.quick_facts,
-            about_text=entity.about_text,
-            photo="",
+            about_text=entity.about_text
         )

@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from enum import IntEnum
 
 
 class PlantResponse(BaseModel):
@@ -9,4 +10,9 @@ class PlantResponse(BaseModel):
     favourite_activities: dict
     quick_facts: dict
     about_text: str
-    photo: str
+
+
+class PotColor(IntEnum):
+    black = 1
+    white = 2
+    none = 3

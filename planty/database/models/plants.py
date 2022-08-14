@@ -4,7 +4,7 @@ from .base import BaseModel
 
 
 class Plant(BaseModel):
-    __tablename__ = "plants"
+    __tablename__ = "photos"
 
     name = Column(VARCHAR(255), nullable=False)
     short_name = Column(VARCHAR(255), nullable=False)
