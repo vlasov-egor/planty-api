@@ -1,21 +1,7 @@
-# import math
-#
-# # pot = Image.open("images/pot.webp")
-# # plant = Image.open("images/plant-1.webp")
-#
-# # pot.convert("RGBA").save("pot.png", "png")
-# # plant.convert("RGBA").save("plant-1.png", "png")
-#
-# pot = Image.open("images/pot.png")
-# plant = Image.open("images/plant-2.png")
-#
-# merged = Image.new("RGBA", (plant.size[0] + 200, plant.size[1] + 200))
-#
-# merged.paste(pot, (plant.size[0] // 2 + 100 - pot.size[0] // 2, plant.size[1] + 75 - pot.size[1]), pot)
-# merged.paste(plant, (100, 100), plant)
-# merged.show()
 from PIL import Image
 import re
+from os import listdir
+from os.path import isfile, join
 
 
 class PhotoMerger:
@@ -29,19 +15,33 @@ class PhotoMerger:
         photo.convert("RGBA").save(path_to_photo[:re.search(r'webp', path_to_photo).start()] + "png", "png")
 
     @staticmethod
-    def merge_photo(path_to_pot_photo: str, path_to_plant_photo: str):
-        pot = Image.open(path_to_pot_photo)
-        plant = Image.open(path_to_plant_photo)
+    def merge_photo(path_to_pot_photo: str, path_to_plant_photo: str, path_to_save: str):
+        pot = Image.open(path_to_pot_photo).convert("RGBA")
+        plant = Image.open(path_to_plant_photo).convert("RGBA")
 
         merged = Image.new("RGBA", (plant.size[0] + 200, plant.size[1] + 200))
 
-        merged.paste(pot, (plant.size[0] // 2 + 100 - pot.size[0] // 2, plant.size[1] + 75 - pot.size[1]), pot)
+        merged.paste(pot, (plant.size[0] // 2 + 100 - pot.size[0] // 2, plant.size[1] + 100 - pot.size[1]), pot)
         merged.paste(plant, (100, 100), plant)
-        merged.show()
+
+        merged.save(path_to_save, format="png")
 
 
 if __name__ == "__main__":
-    _photo_merger = PhotoMerger
+    _photo_merger = PhotoMerger()
 
-    # _photo_merger.webp_to_png(input("Enter path to webp file:\n"))
-    _photo_merger.merge_photo(input("Enter path to pot:\n"), input("Enter path to plant:\n"))
+    plants_dir_path = "/Users/egor-vlasov/src/planty/planty-api/planty/core/photos/plants/"
+    black_pot_path = "/Users/egor-vlasov/src/planty/planty-api/planty/core/photos/pots/black_pot.png"
+    white_pot_path = "/Users/egor-vlasov/src/planty/planty-api/planty/core/photos/pots/white_pot.png"
+
+    plants_paths = [f for f in listdir(plants_dir_path + "without_pot/") if
+                    isfile(join(plants_dir_path + "without_pot/", f))]
+
+    for index, plant in enumerate(plants_paths):
+        _photo_merger.merge_photo(black_pot_path, plants_dir_path + "without_pot/" + plant,
+                                  plants_dir_path + "black_pot/" + plant)
+
+        _photo_merger.merge_photo(white_pot_path, plants_dir_path + "without_pot/" + plant,
+                                  plants_dir_path + "white_pot/" + plant)
+
+        print(f"merged: {index + 1}")
