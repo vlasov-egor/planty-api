@@ -5,7 +5,6 @@ from ...database.models.plants import Plant
 class PlantsMapper:
     @staticmethod
     def to_plant_response(entity: Plant) -> PlantResponse:
-
         return PlantResponse(
             name=entity.name,
             short_name=entity.short_name,
