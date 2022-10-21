@@ -23,7 +23,7 @@ async def import_plants(file: UploadFile, _plants_service: PlantsService = Depen
     return {"result": "success"}
 
 
-@router.get("/{plant_id}/photo/{pot_color}")
+@router.get("/{plant_id}/photo/{pot_color}", response_model=FileResponse)
 async def get_plant_photo(plant_id: int, pot_color: PotColor, _plants_service: PlantsService = Depends()):
     file = await _plants_service.get_photo_path(plant_id, pot_color)
     return FileResponse(file)
