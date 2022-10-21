@@ -1,4 +1,5 @@
 import json
+import os.path
 
 from fastapi import Depends, HTTPException
 
@@ -55,14 +56,16 @@ class PlantsService:
         if plant is None:
             raise HTTPException(status_code=404, detail="Plant not found")
 
-        # Todo: add check if there are no photo for plant
-        path_to_photo = ""
+        path_to_photo = "planty/core/photos/plants"
         match pot_color:
             case PotColor.black:
-                path_to_photo = f"planty/core/photos/plants/black_pot/{plant.name}.png"
+                path_to_photo += f"/black_pot/{plant.name}.png"
             case PotColor.white:
-                path_to_photo = f"planty/core/photos/plants/white_pot/{plant.name}.png"
+                path_to_photo += f"/white_pot/{plant.name}.png"
             case PotColor.none:
-                path_to_photo = f"planty/core/photos/plants/without_pot/{plant.name}.png"
+                path_to_photo += f"/without_pot/{plant.name}.png"
+
+        if os.path.isfile(path_to_photo):
+            raise HTTPException(status_code=404, detail="Photo not found")
 
         return path_to_photo
