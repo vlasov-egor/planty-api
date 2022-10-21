@@ -1,9 +1,10 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from .dbSession import DbSession
 from .models.base import Base
-import os
 
 DATABASE_CONNECTION_STRING = os.environ.get("Database_Connection_String")
 

@@ -55,6 +55,7 @@ class PlantsService:
         if plant is None:
             raise HTTPException(status_code=404, detail="Plant not found")
 
+        # Todo: add check if there are no photo for plant
         path_to_photo = ""
         match pot_color:
             case PotColor.black:
